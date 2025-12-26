@@ -60,6 +60,14 @@ const menuItems = [
     color: '#0288D1',
     gradient: 'linear-gradient(135deg, #039BE5 0%, #01579B 100%)'
   },
+  {
+    title: 'Campaigns',
+    icon: 'mdi-bullhorn',
+    route: '/campaigns',
+    description: 'Marketing campaigns',
+    color: '#0288D1',
+    gradient: 'linear-gradient(135deg, #0288D1 0%, #01579B 100%)'
+  }
 ]
 
 const handleLogout = async () => {
