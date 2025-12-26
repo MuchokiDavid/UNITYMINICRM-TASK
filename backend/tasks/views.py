@@ -8,10 +8,10 @@ from django.contrib.auth.models import User
 from django.db.models import Count, Sum, Q
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from .models import Company, Contact, Deal, Task
+from .models import Company, Contact, Deal, Task, Campaign
 from .serializers import (
     CompanySerializer, ContactSerializer, DealSerializer,
-    TaskSerializer, UserSerializer
+    TaskSerializer, UserSerializer, CampaignSerializer
 )
 
 @api_view(['POST'])
@@ -118,6 +118,15 @@ class DealViewSet(viewsets.ModelViewSet):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+# Views to handle Campaign model CRUD Operations
+class CampaignViewSet(viewsets.ModelViewSet):
+    queryset = Campaign.objects.all()
+    serializer_class = CampaignSerializer
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
