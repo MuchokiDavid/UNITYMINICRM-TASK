@@ -5,6 +5,7 @@ import ContactsView from '../views/ContactsView.vue'
 import CompaniesView from '../views/CompaniesView.vue'
 import DealsView from '../views/DealsView.vue'
 import TasksView from '../views/TasksView.vue'
+import CampaignsView from '../views/CampaignsView.vue'
 
 const routes = [
   {
@@ -41,6 +42,12 @@ const routes = [
     path: '/tasks',
     name: 'Tasks',
     component: TasksView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/campaigns',
+    name: 'Campaigns',
+    component: CampaignsView,
     meta: { requiresAuth: true }
   }
 ]
