@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
-    CompanyViewSet, ContactViewSet, DealViewSet, TaskViewSet,
+    CompanyViewSet, ContactViewSet, DealViewSet, TaskViewSet, CampaignViewSet,
     login_view, logout_view, dashboard_stats, register_view
 )
 
@@ -10,6 +10,7 @@ router.register(r'companies', CompanyViewSet)
 router.register(r'contacts', ContactViewSet)
 router.register(r'deals', DealViewSet)
 router.register(r'tasks', TaskViewSet)
+router.register(r'campaigns', CampaignViewSet)
 
 urlpatterns = [
     path('auth/register/', register_view, name='register'),
