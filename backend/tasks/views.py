@@ -6,12 +6,39 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.db.models import Count, Sum, Q
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from .models import Company, Contact, Deal, Task
 from .serializers import (
     CompanySerializer, ContactSerializer, DealSerializer,
     TaskSerializer, UserSerializer
 )
 
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register_view(request):
+    username = request.data.get('username')
+    email= request.data.get('email')
+    password = request.data.get('password')
+
+    if not username or not password:
+        return Response({'error': 'Username and password are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if email:
+        try:
+            validate_email(email)
+        except ValidationError:
+            return Response({'error': 'Invalid email format'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+        return Response({'error': 'Username or email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+    user = User.objects.create_user(username=username, email=email, password=password)
+    token, created = Token.objects.get_or_create(user=user)
+    return Response({
+        'token': token.key,
+        'user': UserSerializer(user).data
+    }) 
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
