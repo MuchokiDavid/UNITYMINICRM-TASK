@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Company, Contact, Deal, Task
-
+from .models import Company, Contact, Deal, Task, Campaign
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -68,3 +67,9 @@ class TaskSerializer(serializers.ModelSerializer):
                   'assigned_to_name', 'created_at', 'updated_at', 'created_by',
                   'created_by_name']
         read_only_fields = ['id', 'created_at', 'updated_at', 'created_by']
+
+class CampaignSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Campaign
+        fields = '__all__'
+        read_only_fields = ('created_by',)
