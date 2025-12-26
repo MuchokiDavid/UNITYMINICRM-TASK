@@ -120,6 +120,27 @@ export const crmService = {
   async deleteTask(id) {
     await api.delete(`/tasks/${id}/`)
   },
+
+  // Campaigns
+  async getCampaigns() {
+    const response = await api.get('/campaigns/')
+    return response.data
+  },
+  async getCampaign(id) {
+    const response = await api.get(`/campaigns/${id}/`)
+    return response.data
+  },
+  async createCampaign(data) {
+    const response = await api.post('/campaigns/', data)
+    return response.data
+  },
+  async updateCampaign(id, data) {
+    const response = await api.put(`/campaigns/${id}/`, data)
+    return response.data
+  },
+  async deleteCampaign(id) {
+    await api.delete(`/campaigns/${id}/`)
+  },
 }
 
 export default api
