@@ -47,7 +47,7 @@ This is a full-stack CRM application built with Django REST Framework backend an
 7. **Campaign Management**
    - Marketing campaign creation and tracking
    - Campaign performance monitoring
-   - Integration with contacts and deals
+   - Integration with deals
 
 ## Setup Instructions
 
