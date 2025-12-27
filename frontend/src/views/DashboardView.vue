@@ -362,6 +362,13 @@ const navigateTo = (path) => {
                   title="Add New Task"
                   subtitle="Create a new task"
                 ></v-list-item>
+                <v-list-item
+                  @click="navigateTo('/campaigns')"
+                  class="rounded mb-2 cursor-pointer"
+                  prepend-icon="mdi-bullhorn-outline"
+                  title="Create New Campaign"
+                  subtitle="Start a new Campaign"
+                ></v-list-item>
               </v-list>
             </v-card-text>
           </v-card>
