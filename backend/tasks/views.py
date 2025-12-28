@@ -144,3 +144,20 @@ class CampaignView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class CampaignByIdView(APIView):
+    def get_object(self, pk, user):
+        try:
+            return Campaign.objects.get(pk=pk, created_by=user)
+        except Campaign.DoesNotExist:
+            return None
+
+    def get(self, request, pk):
+        try:
+            campaign = self.get_object(pk, request.user)
+            if not campaign:
+                return Response({'error': 'Campaign not found'}, status=status.HTTP_404_NOT_FOUND)
+            serializer = CampaignSerializer(campaign)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
