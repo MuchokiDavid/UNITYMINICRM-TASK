@@ -174,3 +174,13 @@ class CampaignByIdView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, pk):
+        try:
+            campaign = self.get_object(pk, request.user)
+            if not campaign:
+                return Response({'error': 'Campaign not found'}, status=status.HTTP_404_NOT_FOUND)
+            campaign.delete()
+            return Response({'message': 'Campaign deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
