@@ -128,7 +128,13 @@ class TaskViewSet(viewsets.ModelViewSet):
 class CampaignView(APIView):
     def get(self, request):
         try:
-            campaigns = Campaign.objects.filter(created_by=request.user)
+            search = request.query_params.get('search')
+            if search:
+                campaigns = Campaign.objects.filter(
+                    Q(name__icontains=search) | Q(description__icontains=search),
+                    created_by=request.user
+                )
+            campaigns = self.get_queryset()
             serializer = CampaignSerializer(campaigns, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
@@ -145,6 +151,8 @@ class CampaignView(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    def get_queryset(self):
+        return Campaign.objects.filter(created_by=self.request.user)
 class CampaignByIdView(APIView):
     def get_object(self, pk, user):
         try:
